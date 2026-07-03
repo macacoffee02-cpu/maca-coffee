@@ -3,6 +3,11 @@
 
 import { useState } from "react";
 
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbzV3uo7_vYHqaYKeuYU7WkYKb7kFLvj2BJ-ROmcJ5iMnBr5JVfTfthBLcvWKJyooi1m/exec";
 const PHONE_NUMBER = "+88 01794005151";
@@ -90,6 +95,17 @@ export default function OrderLandingPage() {
       const data = await res.json();
 
       if (data.status === "success") {
+        // Facebook Pixel - Purchase event
+        if (typeof window !== "undefined" && window.fbq) {
+          window.fbq("track", "Purchase", {
+            value: total,
+            currency: "BDT",
+            content_name: product.label,
+            content_type: "product",
+            num_items: quantity,
+          });
+        }
+
         setStatus("success");
         setForm({ name: "", phone: "", address: "", note: "" });
         setQuantity(1);
