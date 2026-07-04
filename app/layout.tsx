@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 
-const FB_PIXEL_ID = "1700249034636735";
+const FB_PIXEL_ID = "2520636235071546";
 
 export const metadata: Metadata = {
   title: "Maca Coffee - অর্ডার করুন",
